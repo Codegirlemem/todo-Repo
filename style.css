@@ -30,7 +30,9 @@ body {
 }
 
 /* SECTION TASK-PROGRESS */
-
+.create-tasks {
+  margin-bottom: 20px;
+}
 .today {
   display: flex;
   justify-content: space-between;
@@ -40,9 +42,9 @@ body {
 
 h1 {
   font-weight: normal;
-  color: #3f3f3f;
   font-size: 36px;
   font-weight: 300;
+  color: #3f3f3f;
 }
 
 .btn-plus {
@@ -55,16 +57,53 @@ h1 {
   background: none;
   border: 1.5px solid #8484c0;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .btn-plus svg {
   width: 100%;
   fill: #8484c0;
+  color: #ff6464;
+
+  /* cancel */
+
+  /* background: none;
+  border: none;
+  font-size: 16px; */
 }
 
-.task-progress {
-  margin-bottom: 20px;
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.input-container .enter-task {
+  flex: 1;
+  margin-right: 10px;
+  padding: 5px;
+  /* outline: none; */
+  border: none;
+  font-size: 18px;
+  color: #3f3f3f;
+
+  /* border-bottom: 2px solid #8484c0; */
+}
+
+.input-container .submit-task {
+  align-self: stretch;
+  margin-right: 3px;
+  padding: 5px;
+  font-size: 18px;
+  color: #3f3f3f;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* .task-progress {
+ 
+} */
 
 .progress-status {
   margin-bottom: 30px;
@@ -93,6 +132,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 35px;
+  margin-bottom: 20px;
 }
 
 /* section Timeline */

@@ -4,8 +4,8 @@ task.innerHTML = `
   <div id="task">
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>
   </div>
-  <slot></slot>
-  <slot id="show" name="updateTask"></slot>
+  <span><slot></slot></span>
+  <button>x</button>
 </label>
 `;
 
@@ -17,12 +17,31 @@ class TodoTask extends HTMLElement {
     shadow.adoptedStyleSheets = [toDo];
     this.label = shadow.querySelector("label");
     this.div = shadow.querySelector("div");
+    this.span = shadow.querySelector("span");
+    this.button = shadow.querySelector("button");
+    this.host = shadow.host;
   }
 
   connectedCallback() {
     this.div.style.backgroundColor = "white";
+
+    this.host.addEventListener("mouseover", () => {
+      this.button.style.display = "block";
+      this.deleteTask();
+    });
+
+    this.host.addEventListener("mouseout", () => {
+      this.button.style.display = "none";
+    });
+
     this.div.addEventListener("click", () => {
       this.showTask();
+    });
+  }
+
+  deleteTask() {
+    this.button.addEventListener("click", (e) => {
+      this.host.remove();
     });
   }
 
@@ -91,3 +110,63 @@ function updateProgressBar(taskPercent) {
   ${taskPercent.toFixed(0)}%
   `;
 }
+
+// ADDING MORE Tasks to the todo lists
+const createTasks = document.querySelector(".create-tasks");
+const btnPlus = document.querySelector(".btn-plus");
+
+const inputContainer = document.createElement("div");
+inputContainer.setAttribute("class", "input-container");
+
+const inputField = document.createElement("input");
+inputField.setAttribute("type", "text");
+inputField.classList.add("enter-task");
+inputField.placeholder = "Add a new task";
+
+const submitInput = document.createElement("button");
+submitInput.classList.add("submit-task");
+submitInput.textContent = "Add";
+
+inputContainer.append(inputField, submitInput);
+
+btnPlus.addEventListener("click", () => {
+  showTaskInput();
+});
+
+function showTaskInput() {
+  const newInputTask = document.querySelector(".input-container");
+
+  if (newInputTask) {
+    newInputTask.remove();
+  } else {
+    createTasks.appendChild(inputContainer);
+  }
+
+  const submitTask = document.querySelector(".submit-task");
+
+  submitTask.addEventListener("click", (event) => {
+    event.preventDefault();
+    console.log(event.target);
+    appendUserTask();
+  });
+}
+
+function appendUserTask() {
+  const enterTask = document.querySelector(".enter-task");
+  const taskValue = enterTask.value.trim();
+
+  // create new todo-task component and add its slot content
+  const newTodoTask = document.createElement("todo-task");
+  newTodoTask.setAttribute("completed", "false");
+  newTodoTask.textContent = taskValue;
+
+  const tasks = document.querySelector(".tasks");
+  tasks.appendChild(newTodoTask);
+  enterTask.value = "";
+  newInputTask.remove();
+}
+
+// function getUserTask() {
+//     const taskValue = enterTask.value.trim();
+
+// }
