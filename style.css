@@ -15,7 +15,7 @@ body {
   background-color: white;
   margin: 50px auto;
   padding: 40px 30px 15px;
-  width: min(100vw, 400px);
+  width: min(90vw, 400px);
 }
 
 .back {
